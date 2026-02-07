@@ -61,6 +61,8 @@ export interface TemplateProps {
   title: string;
   text: string;
   image: string | null;
+  titleSize?: number;
+  textSize?: number;
 }
 
 // Helper to darken/lighten hex
