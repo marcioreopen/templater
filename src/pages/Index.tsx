@@ -3,6 +3,7 @@ import { BRAND_COLORS, TEMPLATE_NAMES } from "@/config/brand";
 import { TEMPLATES } from "@/components/templates";
 import { toPng } from "html-to-image";
 import { Download, Image as ImageIcon, Sparkles } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 
 const Index = () => {
   const [title, setTitle] = useState("Seu título aqui");
@@ -11,6 +12,8 @@ const Index = () => {
   const [selectedColor, setSelectedColor] = useState<string>(BRAND_COLORS[0].value);
   const [image, setImage] = useState<string | null>(null);
   const [generating, setGenerating] = useState(false);
+  const [titleSize, setTitleSize] = useState(100);
+  const [textSize, setTextSize] = useState(100);
   const canvasRef = useRef<HTMLDivElement>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,6 +130,30 @@ const Index = () => {
             <span className="text-xs text-muted-foreground mt-1 block">{text.length}/200</span>
           </div>
 
+          {/* Font Sizes */}
+          <div>
+            <label className="text-sm font-medium text-foreground mb-2 block">Tamanho da fonte do título ({titleSize}%)</label>
+            <Slider
+              value={[titleSize]}
+              onValueChange={(v) => setTitleSize(v[0])}
+              min={50}
+              max={150}
+              step={5}
+              className="w-full"
+            />
+          </div>
+          <div>
+            <label className="text-sm font-medium text-foreground mb-2 block">Tamanho da fonte do subtítulo ({textSize}%)</label>
+            <Slider
+              value={[textSize]}
+              onValueChange={(v) => setTextSize(v[0])}
+              min={50}
+              max={150}
+              step={5}
+              className="w-full"
+            />
+          </div>
+
           {/* Image Upload */}
           <div>
             <label className="text-sm font-medium text-foreground mb-2 block">Imagem principal</label>
@@ -180,6 +207,8 @@ const Index = () => {
                 title={title}
                 text={text}
                 image={image}
+                titleSize={titleSize}
+                textSize={textSize}
               />
             )}
           </div>
