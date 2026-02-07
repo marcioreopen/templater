@@ -56,6 +56,12 @@ export const TEMPLATE_NAMES = [
   "20 - Minimalista Limpo",
 ] as const;
 
+export const CANVAS_FORMATS = [
+  { name: "Quadrado", label: "1080×1080", width: 1080, height: 1080 },
+  { name: "Reels", label: "1080×1350", width: 1080, height: 1350 },
+  { name: "Stories", label: "1080×1920", width: 1080, height: 1920 },
+] as const;
+
 export interface TemplateProps {
   color: string;
   title: string;
@@ -63,6 +69,8 @@ export interface TemplateProps {
   image: string | null;
   titleSize?: number;
   textSize?: number;
+  canvasWidth?: number;
+  canvasHeight?: number;
 }
 
 // Helper to darken/lighten hex

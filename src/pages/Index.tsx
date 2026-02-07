@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { BRAND_COLORS, TEMPLATE_NAMES } from "@/config/brand";
+import { useState, useRef, useMemo } from "react";
+import { BRAND_COLORS, TEMPLATE_NAMES, CANVAS_FORMATS } from "@/config/brand";
 import { TEMPLATES } from "@/components/templates";
 import { toPng } from "html-to-image";
 import { Download, Image as ImageIcon, Sparkles } from "lucide-react";
@@ -14,7 +14,16 @@ const Index = () => {
   const [generating, setGenerating] = useState(false);
   const [titleSize, setTitleSize] = useState(100);
   const [textSize, setTextSize] = useState(100);
+  const [selectedFormat, setSelectedFormat] = useState(0);
   const canvasRef = useRef<HTMLDivElement>(null);
+
+  const format = CANVAS_FORMATS[selectedFormat];
+
+  const previewScale = useMemo(() => {
+    const maxW = 600;
+    const maxH = 700;
+    return Math.min(maxW / format.width, maxH / format.height);
+  }, [format]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -30,12 +39,12 @@ const Index = () => {
     setGenerating(true);
     try {
       const dataUrl = await toPng(canvasRef.current, {
-        width: 1080,
-        height: 1080,
+        width: format.width,
+        height: format.height,
         pixelRatio: 1,
       });
       const link = document.createElement("a");
-      link.download = `controla-food-template-${selectedTemplate}.png`;
+      link.download = `controla-food-${format.name.toLowerCase()}-${selectedTemplate}.png`;
       link.href = dataUrl;
       link.click();
     } catch (err) {
@@ -65,6 +74,34 @@ const Index = () => {
         </div>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          {/* Format */}
+          <div>
+            <label className="text-sm font-medium text-foreground mb-2 block">Formato</label>
+            <div className="grid grid-cols-3 gap-2">
+              {CANVAS_FORMATS.map((f, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSelectedFormat(i)}
+                  className={`flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-all text-xs font-medium ${
+                    selectedFormat === i
+                      ? "border-primary bg-primary/10 text-foreground"
+                      : "border-border bg-secondary text-muted-foreground hover:border-primary/30"
+                  }`}
+                >
+                  <div
+                    className="border border-current rounded-sm"
+                    style={{
+                      width: f.width / 60,
+                      height: f.height / 60,
+                    }}
+                  />
+                  <span>{f.name}</span>
+                  <span className="text-[10px] opacity-60">{f.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Template */}
           <div>
             <label className="text-sm font-medium text-foreground mb-2 block">Template</label>
@@ -195,9 +232,9 @@ const Index = () => {
           <div
             ref={canvasRef}
             style={{
-              width: 1080,
-              height: 1080,
-              transform: "scale(0.55)",
+              width: format.width,
+              height: format.height,
+              transform: `scale(${previewScale})`,
               transformOrigin: "center center",
             }}
           >
@@ -209,6 +246,8 @@ const Index = () => {
                 image={image}
                 titleSize={titleSize}
                 textSize={textSize}
+                canvasWidth={format.width}
+                canvasHeight={format.height}
               />
             )}
           </div>
