@@ -58,7 +58,7 @@ const Index = () => {
         width: format.width,
         height: format.height,
         pixelRatio: 2,
-        cacheBust: true,
+        cacheBust: true
       });
       const link = document.createElement("a");
       link.download = `controla-food-${format.name.toLowerCase()}-${selectedTemplate}.png`;
@@ -84,8 +84,8 @@ const Index = () => {
               <Sparkles className="w-5 h-5 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-foreground tracking-tight" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Controla Food
+              <h1 className="text-lg font-bold text-foreground tracking-tight" style={{ fontFamily: "'Poppins', sans-serif" }}>Templater
+
               </h1>
               <p className="text-xs text-muted-foreground">Gerador de Peças</p>
             </div>
@@ -97,27 +97,27 @@ const Index = () => {
           <div>
             <label className="text-sm font-medium text-foreground mb-2 block">Formato</label>
             <div className="grid grid-cols-3 gap-2">
-              {CANVAS_FORMATS.map((f, i) => (
-                <button
-                  key={i}
-                  onClick={() => setSelectedFormat(i)}
-                  className={`flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-all text-xs font-medium ${
-                    selectedFormat === i
-                      ? "border-primary bg-primary/10 text-foreground"
-                      : "border-border bg-secondary text-muted-foreground hover:border-primary/30"
-                  }`}
-                >
+              {CANVAS_FORMATS.map((f, i) =>
+              <button
+                key={i}
+                onClick={() => setSelectedFormat(i)}
+                className={`flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-all text-xs font-medium ${
+                selectedFormat === i ?
+                "border-primary bg-primary/10 text-foreground" :
+                "border-border bg-secondary text-muted-foreground hover:border-primary/30"}`
+                }>
+
                   <div
-                    className="border border-current rounded-sm"
-                    style={{
-                      width: f.width / 60,
-                      height: f.height / 60,
-                    }}
-                  />
+                  className="border border-current rounded-sm"
+                  style={{
+                    width: f.width / 60,
+                    height: f.height / 60
+                  }} />
+
                   <span>{f.name}</span>
                   <span className="text-[10px] opacity-60">{f.label}</span>
                 </button>
-              ))}
+              )}
             </div>
           </div>
 
@@ -127,13 +127,13 @@ const Index = () => {
             <select
               value={selectedTemplate}
               onChange={(e) => setSelectedTemplate(Number(e.target.value))}
-              className="w-full h-10 px-3 rounded-md bg-secondary text-secondary-foreground border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            >
-              {TEMPLATE_NAMES.map((name, i) => (
-                <option key={i} value={i + 1} className="bg-popover text-popover-foreground">
+              className="w-full h-10 px-3 rounded-md bg-secondary text-secondary-foreground border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+
+              {TEMPLATE_NAMES.map((name, i) =>
+              <option key={i} value={i + 1} className="bg-popover text-popover-foreground">
                   {name}
                 </option>
-              ))}
+              )}
             </select>
           </div>
 
@@ -141,20 +141,20 @@ const Index = () => {
           <div>
             <label className="text-sm font-medium text-foreground mb-2 block">Cor da marca</label>
             <div className="grid grid-cols-5 gap-2">
-              {BRAND_COLORS.map((c) => (
-                <button
-                  key={c.value}
-                  onClick={() => setSelectedColor(c.value)}
-                  className="w-full aspect-square rounded-lg transition-all duration-150 border-2"
-                  style={{
-                    background: c.value,
-                    borderColor: selectedColor === c.value ? "#fff" : "transparent",
-                    transform: selectedColor === c.value ? "scale(1.1)" : "scale(1)",
-                    boxShadow: selectedColor === c.value ? `0 0 12px ${c.value}` : "none",
-                  }}
-                  title={c.name}
-                />
-              ))}
+              {BRAND_COLORS.map((c) =>
+              <button
+                key={c.value}
+                onClick={() => setSelectedColor(c.value)}
+                className="w-full aspect-square rounded-lg transition-all duration-150 border-2"
+                style={{
+                  background: c.value,
+                  borderColor: selectedColor === c.value ? "#fff" : "transparent",
+                  transform: selectedColor === c.value ? "scale(1.1)" : "scale(1)",
+                  boxShadow: selectedColor === c.value ? `0 0 12px ${c.value}` : "none"
+                }}
+                title={c.name} />
+
+              )}
             </div>
           </div>
 
@@ -169,24 +169,24 @@ const Index = () => {
                   background: "#FFFFFF",
                   borderColor: logoColor === "#FFFFFF" ? "#333" : "transparent",
                   transform: logoColor === "#FFFFFF" ? "scale(1.1)" : "scale(1)",
-                  boxShadow: logoColor === "#FFFFFF" ? "0 0 12px rgba(255,255,255,0.5)" : "none",
+                  boxShadow: logoColor === "#FFFFFF" ? "0 0 12px rgba(255,255,255,0.5)" : "none"
                 }}
-                title="Branco"
-              />
-              {BRAND_COLORS.map((c) => (
-                <button
-                  key={`logo-${c.value}`}
-                  onClick={() => setLogoColor(c.value)}
-                  className="w-full aspect-square rounded-lg transition-all duration-150 border-2"
-                  style={{
-                    background: c.value,
-                    borderColor: logoColor === c.value ? "#fff" : "transparent",
-                    transform: logoColor === c.value ? "scale(1.1)" : "scale(1)",
-                    boxShadow: logoColor === c.value ? `0 0 12px ${c.value}` : "none",
-                  }}
-                  title={c.name}
-                />
-              ))}
+                title="Branco" />
+
+              {BRAND_COLORS.map((c) =>
+              <button
+                key={`logo-${c.value}`}
+                onClick={() => setLogoColor(c.value)}
+                className="w-full aspect-square rounded-lg transition-all duration-150 border-2"
+                style={{
+                  background: c.value,
+                  borderColor: logoColor === c.value ? "#fff" : "transparent",
+                  transform: logoColor === c.value ? "scale(1.1)" : "scale(1)",
+                  boxShadow: logoColor === c.value ? `0 0 12px ${c.value}` : "none"
+                }}
+                title={c.name} />
+
+              )}
             </div>
           </div>
           <div>
@@ -197,8 +197,8 @@ const Index = () => {
               onChange={(e) => setTitle(e.target.value)}
               maxLength={60}
               className="w-full h-10 px-3 rounded-md bg-secondary text-secondary-foreground border border-border text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-              placeholder="Título da peça"
-            />
+              placeholder="Título da peça" />
+
             <span className="text-xs text-muted-foreground mt-1 block">{title.length}/60</span>
           </div>
 
@@ -211,8 +211,8 @@ const Index = () => {
               maxLength={200}
               rows={3}
               className="w-full px-3 py-2 rounded-md bg-secondary text-secondary-foreground border border-border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ring"
-              placeholder="Texto complementar"
-            />
+              placeholder="Texto complementar" />
+
             <span className="text-xs text-muted-foreground mt-1 block">{text.length}/200</span>
           </div>
 
@@ -225,8 +225,8 @@ const Index = () => {
               min={50}
               max={150}
               step={5}
-              className="w-full"
-            />
+              className="w-full" />
+
           </div>
           <div>
             <label className="text-sm font-medium text-foreground mb-2 block">Tamanho da fonte do subtítulo ({textSize}%)</label>
@@ -236,50 +236,50 @@ const Index = () => {
               min={50}
               max={150}
               step={5}
-              className="w-full"
-            />
+              className="w-full" />
+
           </div>
 
           {/* Image Upload */}
           <div>
             <label className="text-sm font-medium text-foreground mb-2 block">Imagem principal</label>
             <label className="flex items-center justify-center gap-2 w-full h-24 rounded-lg border-2 border-dashed border-border bg-secondary cursor-pointer hover:border-primary/50 transition-colors">
-              {image ? (
-                <img src={image} alt="Preview" className="h-full w-full object-cover rounded-lg" />
-              ) : (
-                <div className="flex flex-col items-center gap-1 text-muted-foreground">
+              {image ?
+              <img src={image} alt="Preview" className="h-full w-full object-cover rounded-lg" /> :
+
+              <div className="flex flex-col items-center gap-1 text-muted-foreground">
                   <ImageIcon className="w-6 h-6" />
                   <span className="text-xs">Clique para enviar</span>
                 </div>
-              )}
+              }
               <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
             </label>
-            {image && (
-              <button onClick={() => setImage(null)} className="text-xs text-destructive mt-1 hover:underline">
+            {image &&
+            <button onClick={() => setImage(null)} className="text-xs text-destructive mt-1 hover:underline">
                 Remover imagem
               </button>
-            )}
+            }
           </div>
 
           {/* Logo Upload */}
           <div>
             <label className="text-sm font-medium text-foreground mb-2 block">Logo</label>
             <label className="flex items-center justify-center gap-2 w-full h-24 rounded-lg border-2 border-dashed border-border bg-secondary cursor-pointer hover:border-primary/50 transition-colors">
-              {logoImage ? (
-                <img src={logoImage} alt="Logo" className="h-full object-contain rounded-lg p-2" />
-              ) : (
-                <div className="flex flex-col items-center gap-1 text-muted-foreground">
+              {logoImage ?
+              <img src={logoImage} alt="Logo" className="h-full object-contain rounded-lg p-2" /> :
+
+              <div className="flex flex-col items-center gap-1 text-muted-foreground">
                   <ImageIcon className="w-6 h-6" />
                   <span className="text-xs">Logo padrão (clique para alterar)</span>
                 </div>
-              )}
+              }
               <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
             </label>
-            {logoImage && (
-              <button onClick={() => setLogoImage(null)} className="text-xs text-destructive mt-1 hover:underline">
+            {logoImage &&
+            <button onClick={() => setLogoImage(null)} className="text-xs text-destructive mt-1 hover:underline">
                 Usar logo padrão
               </button>
-            )}
+            }
           </div>
         </div>
 
@@ -288,8 +288,8 @@ const Index = () => {
           <button
             onClick={handleDownload}
             disabled={generating}
-            className="w-full h-11 rounded-lg bg-primary text-primary-foreground font-semibold text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50"
-          >
+            className="w-full h-11 rounded-lg bg-primary text-primary-foreground font-semibold text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50">
+
             <Download className="w-4 h-4" />
             {generating ? "Gerando..." : "Gerar peça e baixar PNG"}
           </button>
@@ -305,28 +305,28 @@ const Index = () => {
               width: format.width,
               height: format.height,
               transform: `scale(${previewScale})`,
-              transformOrigin: "center center",
-            }}
-          >
-            {TemplateComponent && (
-              <TemplateComponent
-                color={selectedColor}
-                title={title}
-                text={text}
-                image={image}
-                titleSize={titleSize}
-                textSize={textSize}
-                canvasWidth={format.width}
-                canvasHeight={format.height}
-                logoColor={logoColor}
-                logoImage={logoImage}
-              />
-            )}
+              transformOrigin: "center center"
+            }}>
+
+            {TemplateComponent &&
+            <TemplateComponent
+              color={selectedColor}
+              title={title}
+              text={text}
+              image={image}
+              titleSize={titleSize}
+              textSize={textSize}
+              canvasWidth={format.width}
+              canvasHeight={format.height}
+              logoColor={logoColor}
+              logoImage={logoImage} />
+
+            }
           </div>
         </div>
       </main>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;
