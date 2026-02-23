@@ -3,11 +3,14 @@ import logoSrc from "@/assets/logo-controlafood.png";
 interface LogoProps {
   color?: string;
   size?: number;
+  customImage?: string | null;
 }
 
-const BrandLogo = ({ color = "#FFFFFF", size = 28 }: LogoProps) => {
-  const height = size * 1.8;
+const BrandLogo = ({ color = "#FFFFFF", size = 28, customImage }: LogoProps) => {
+  const height = size * 2 * 1.8;
   const width = height * 1.6;
+
+  const src = customImage || logoSrc;
 
   return (
     <div
@@ -15,8 +18,8 @@ const BrandLogo = ({ color = "#FFFFFF", size = 28 }: LogoProps) => {
         width,
         height,
         backgroundColor: color,
-        WebkitMaskImage: `url(${logoSrc})`,
-        maskImage: `url(${logoSrc})`,
+        WebkitMaskImage: `url(${src})`,
+        maskImage: `url(${src})`,
         WebkitMaskSize: "contain",
         maskSize: "contain",
         WebkitMaskRepeat: "no-repeat",
