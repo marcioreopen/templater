@@ -35,13 +35,19 @@ const Index = () => {
   };
 
   const handleDownload = async () => {
-    if (!canvasRef.current) return;
+    const el = canvasRef.current;
+    if (!el) return;
     setGenerating(true);
+    const originalTransform = el.style.transform;
+    const originalTransformOrigin = el.style.transformOrigin;
+    el.style.transform = "none";
+    el.style.transformOrigin = "unset";
     try {
-      const dataUrl = await toPng(canvasRef.current, {
+      const dataUrl = await toPng(el, {
         width: format.width,
         height: format.height,
-        pixelRatio: 1,
+        pixelRatio: 2,
+        cacheBust: true,
       });
       const link = document.createElement("a");
       link.download = `controla-food-${format.name.toLowerCase()}-${selectedTemplate}.png`;
@@ -50,6 +56,8 @@ const Index = () => {
     } catch (err) {
       console.error("Erro ao gerar imagem:", err);
     }
+    el.style.transform = originalTransform;
+    el.style.transformOrigin = originalTransformOrigin;
     setGenerating(false);
   };
 
