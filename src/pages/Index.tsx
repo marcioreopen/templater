@@ -12,6 +12,7 @@ const Index = () => {
   const [selectedColor, setSelectedColor] = useState<string>(BRAND_COLORS[0].value);
   const [image, setImage] = useState<string | null>(null);
   const [logoColor, setLogoColor] = useState<string>("#FFFFFF");
+  const [logoImage, setLogoImage] = useState<string | null>(null);
   const [generating, setGenerating] = useState(false);
   const [titleSize, setTitleSize] = useState(100);
   const [textSize, setTextSize] = useState(100);
@@ -31,6 +32,15 @@ const Index = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (ev) => setImage(ev.target?.result as string);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => setLogoImage(ev.target?.result as string);
       reader.readAsDataURL(file);
     }
   };
@@ -250,6 +260,27 @@ const Index = () => {
               </button>
             )}
           </div>
+
+          {/* Logo Upload */}
+          <div>
+            <label className="text-sm font-medium text-foreground mb-2 block">Logo</label>
+            <label className="flex items-center justify-center gap-2 w-full h-24 rounded-lg border-2 border-dashed border-border bg-secondary cursor-pointer hover:border-primary/50 transition-colors">
+              {logoImage ? (
+                <img src={logoImage} alt="Logo" className="h-full object-contain rounded-lg p-2" />
+              ) : (
+                <div className="flex flex-col items-center gap-1 text-muted-foreground">
+                  <ImageIcon className="w-6 h-6" />
+                  <span className="text-xs">Logo padrão (clique para alterar)</span>
+                </div>
+              )}
+              <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
+            </label>
+            {logoImage && (
+              <button onClick={() => setLogoImage(null)} className="text-xs text-destructive mt-1 hover:underline">
+                Usar logo padrão
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Action */}
@@ -288,6 +319,7 @@ const Index = () => {
                 canvasWidth={format.width}
                 canvasHeight={format.height}
                 logoColor={logoColor}
+                logoImage={logoImage}
               />
             )}
           </div>
