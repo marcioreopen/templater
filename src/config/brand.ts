@@ -71,6 +71,7 @@ export interface TemplateProps {
   textSize?: number;
   canvasWidth?: number;
   canvasHeight?: number;
+  logoColor?: string;
 }
 
 // Helper to darken/lighten hex

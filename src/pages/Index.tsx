@@ -11,6 +11,7 @@ const Index = () => {
   const [selectedTemplate, setSelectedTemplate] = useState(1);
   const [selectedColor, setSelectedColor] = useState<string>(BRAND_COLORS[0].value);
   const [image, setImage] = useState<string | null>(null);
+  const [logoColor, setLogoColor] = useState<string>("#FFFFFF");
   const [generating, setGenerating] = useState(false);
   const [titleSize, setTitleSize] = useState(100);
   const [textSize, setTextSize] = useState(100);
@@ -147,7 +148,37 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Title */}
+          {/* Logo Color */}
+          <div>
+            <label className="text-sm font-medium text-foreground mb-2 block">Cor da logo</label>
+            <div className="grid grid-cols-5 gap-2">
+              <button
+                onClick={() => setLogoColor("#FFFFFF")}
+                className="w-full aspect-square rounded-lg transition-all duration-150 border-2"
+                style={{
+                  background: "#FFFFFF",
+                  borderColor: logoColor === "#FFFFFF" ? "#333" : "transparent",
+                  transform: logoColor === "#FFFFFF" ? "scale(1.1)" : "scale(1)",
+                  boxShadow: logoColor === "#FFFFFF" ? "0 0 12px rgba(255,255,255,0.5)" : "none",
+                }}
+                title="Branco"
+              />
+              {BRAND_COLORS.map((c) => (
+                <button
+                  key={`logo-${c.value}`}
+                  onClick={() => setLogoColor(c.value)}
+                  className="w-full aspect-square rounded-lg transition-all duration-150 border-2"
+                  style={{
+                    background: c.value,
+                    borderColor: logoColor === c.value ? "#fff" : "transparent",
+                    transform: logoColor === c.value ? "scale(1.1)" : "scale(1)",
+                    boxShadow: logoColor === c.value ? `0 0 12px ${c.value}` : "none",
+                  }}
+                  title={c.name}
+                />
+              ))}
+            </div>
+          </div>
           <div>
             <label className="text-sm font-medium text-foreground mb-2 block">Título</label>
             <input
@@ -256,6 +287,7 @@ const Index = () => {
                 textSize={textSize}
                 canvasWidth={format.width}
                 canvasHeight={format.height}
+                logoColor={logoColor}
               />
             )}
           </div>
